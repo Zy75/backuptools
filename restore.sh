@@ -41,12 +41,6 @@ do
   echo -e "${GREEN}Restoring $dev_restore...${NC}"
 
   mkfs -t ext4 $dev_restore > /dev/null 2>&1
-#  ret=$?
-
-#  if [ ! $ret == 0 ] ; then
-#    echo "FAILED: exit."
-#    exit 1
-#  fi
 
   mount $dev_restore /restore
   
