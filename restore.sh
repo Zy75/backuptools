@@ -34,13 +34,19 @@ for restore_part in $backup_from_sdb
 do
   check_partition_exist $restore_part
   check_partition_postfix_number $restore_part
+
   check_protected $restore_part
 
   dev_restore="/dev/$restore_part"
 
   echo -e "${GREEN}Restoring $dev_restore...${NC}"
 
-  mkfs -t ext4 $dev_restore > /dev/null 2>&1
+  mkfs -t ext4 $dev_restore
+
+  if [ ! $? == 0 ] ; then
+    echo "FAILED: mkfs returned non zero."
+    exit 1
+  fi
 
   mount $dev_restore /restore
   
