@@ -1,19 +1,30 @@
 #!/bin/sh
 
-# run as sudo or root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit 1
+fi
 
 GREEN='\033[1;32m'
 NC='\033[0m'
 
 . ./funcs.sh
 
+echo "Have you read conf file? Press Enter."
+read
+
 echo ""
 
 source ./dump_restore.conf
 
+datetime=`date +%Y%m%d-%H%M%S`
+
+echo -e "${GREEN} Backup to: /dev/$backup_to dir: $datetime ${NC}"
+
 check_partition_exist $backup_to
 check_bkup_label $backup_to
 check_partition_postfix_number $backup_to
+check_protected $backup_to
 
 echo ""
 
@@ -21,10 +32,8 @@ umount /mnt
 
 mount "/dev/$backup_to" /mnt
 
-datetime=`date +%Y%m%d-%H%M%S`
-
 cd /mnt
-sudo mkdir $datetime
+mkdir $datetime
 
 for from in $backup_from_sdb
 do
@@ -40,7 +49,6 @@ do
   read
 done
 
-echo ""
 echo -e "${GREEN}Recording UUIDs... ${NC}"
 
 for from in $backup_from_sdb

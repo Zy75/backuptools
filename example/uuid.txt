@@ -1,0 +1,3 @@
+/dev/sdb7: UUID="61d1e9b9-bcfd-43d4-93aa-b57cd2ca477d"
+/dev/sdb8: UUID="ae3c9b2a-8421-4e89-8f7b-57784c583aef"
+/dev/sdb10: UUID="036a5293-e235-4b22-b5d2-e28aaba9c025"

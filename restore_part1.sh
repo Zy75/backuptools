@@ -1,17 +1,23 @@
 #!/bin/sh
 
-# run as sudo or root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit 1
+fi
 
 GREEN='\033[1;32m'
 NC='\033[0m'
 
 . ./funcs.sh
 
+echo "Have you read conf file? Press Enter."
+read
+
 echo ""
 
 source ./dump_restore.conf
 
-echo -e "${GREEN}restore from: /dev/$backup_to ${NC}"
+echo -e "${GREEN}restore from part: /dev/$backup_to/$restore_from_dir ${NC}"
 
 echo ""
 

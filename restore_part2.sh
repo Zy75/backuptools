@@ -1,6 +1,9 @@
 #!/bin/sh
 
-# run as sudo or root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit 1
+fi
 
 source ./dump_restore.conf
 
