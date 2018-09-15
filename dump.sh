@@ -39,3 +39,11 @@ do
   echo -e "${GREEN}PRESS ENTER.${NC}"
   read
 done
+
+echo ""
+echo -e "${GREEN}Recording UUIDs... ${NC}"
+
+for from in $backup_from_sdb
+do
+  blkid -s UUID /dev/$from >> /mnt/$datetime/uuid.txt
+done

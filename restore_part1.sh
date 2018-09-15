@@ -11,6 +11,10 @@ echo ""
 
 source ./dump_restore.conf
 
+echo -e "${GREEN}restore from: /dev/$backup_to ${NC}"
+
+echo ""
+
 check_partition_exist $backup_to
 check_bkup_label $backup_to
 check_partition_postfix_number $backup_to
@@ -58,7 +62,7 @@ do
 
   umount /restore
 
-  echo -e "${GREEN}Restoring finished. $dev_restore...${NC}"
+  echo -e "${GREEN}Restoring finished. $dev_restore${NC}"
   echo -e "${GREEN}PRESS ENTER.${NC}"
   read
 done
