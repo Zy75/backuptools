@@ -9,7 +9,7 @@ function check_bkup_label() {
     echo "ERROR: No 'bkup' label set on backup_to partition."
     exit 1
   else
-    echo -e "${GREEN}OK bkup LABEL${NC}: /dev/$1 "
+    echo -e "${GREEN}OK 'bkup' LABEL${NC}: ( /dev/$1 ) "
   fi
 }
 
@@ -23,12 +23,10 @@ function check_partition_exist() {
   fi
 }
 
-# GOOD: sda1 sdb3
-# BAD: sdc sda ( Entire disk is dangerous. )
 function check_partition_postfix_number(){
   re='^[0-9]$'
   if ! [[ ${1: -1} =~ $re ]] ; then
-    echo "ERROR: $1 must be postfixed by numbers."
+    echo "ERROR: $1 must be postfixed by numbers. (Maybe: Selecting entire disk is dangerous.) "
     exit 1
   else
     echo -e "${GREEN}OK${NC} ( check_partition_postfix_number /dev/$1 )"

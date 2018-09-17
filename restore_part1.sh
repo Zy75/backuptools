@@ -10,16 +10,9 @@ NC='\033[0m'
 
 . ./funcs.sh
 
-echo "Have you read conf file? Press Enter."
-read
-
-echo ""
-
 source ./dump_restore.conf
 
-echo -e "${GREEN}restore from part: /dev/$backup_to/$restore_from_dir ${NC}"
-
-echo ""
+echo -e "\n${GREEN}Restore from: /dev/$backup_to/$restore_from_dir ${NC}\n"
 
 check_partition_exist $backup_to
 check_bkup_label $backup_to
@@ -27,10 +20,8 @@ check_partition_postfix_number $backup_to
 
 echo ""
 
-echo "Disabling SELinux..."
+echo -e "Disabling SELinux... \n"
 setenforce 0
-
-echo ""
 
 mkdir /bkup > /dev/null 2>&1
 umount /bkup > /dev/null 2>&1
@@ -44,19 +35,13 @@ for restore_part in $backup_from_sdb
 do
   check_partition_exist $restore_part
   check_partition_postfix_number $restore_part
-
   check_protected $restore_part
 
   dev_restore="/dev/$restore_part"
 
   echo -e "${GREEN}Restoring $dev_restore...${NC}"
 
-  mkfs -t ext4 $dev_restore
-
-  if [ ! $? == 0 ] ; then
-    echo "FAILED: mkfs returned non zero."
-    exit 1
-  fi
+  mkfs.ext4 -q $dev_restore
 
   mount $dev_restore /restore
   
@@ -72,4 +57,3 @@ do
   echo -e "${GREEN}PRESS ENTER.${NC}"
   read
 done
-
